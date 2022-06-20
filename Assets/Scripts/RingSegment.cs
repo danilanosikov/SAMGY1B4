@@ -1,9 +1,16 @@
 using UnityEngine;
 
 public class RingSegment : MonoBehaviour{
-    private bool selected; // make an accessor, if you need to add animation of the selection
+    private bool selected;
+    private bool Selected {
+        get => Selected = selected;
+        set {
+            selected = value; gameObject.GetComponentInChildren<Renderer>().material.color = value ? Color.red : Color.white; 
+            gameObject.GetComponentInChildren<Renderer>().forceRenderingOff = value;
+        }
+    }
     public Orbit orbit { get; private set; }
-    private void Update() { if (!selected) return;
+    private void Update() { if (!Selected) return;
         if (Input.GetKeyDown(KeyCode.UpArrow)) Up();
         if (Input.GetKeyDown(KeyCode.DownArrow)) Down();
     }
@@ -24,5 +31,5 @@ public class RingSegment : MonoBehaviour{
         var pos = t.localPosition;
         t.localPosition = new Vector3(pos.x,pos.y - 1f,pos.z);
     }
-    public void Toggle() { selected = !selected; }
+    public void Toggle() { Selected = !Selected; }
 }

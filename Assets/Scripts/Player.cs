@@ -1,3 +1,4 @@
+using System.Security.Principal;
 using Unity.Mathematics;
 using UnityEngine;
 
@@ -12,10 +13,28 @@ using UnityEngine;
  * The selected object moves respectively.
 */
 public class Player : MonoBehaviour{
-    private Ray ray;
     private RaycastHit focus;
-
+    private Touch firstTouch;
+    
+    private int centreOffset { get; set; }
     private void Update() {
         Physics.Raycast(transform.position,Vector3.forward,out focus,math.INFINITY);
+        OnTap();
+    }
+
+    private void OnTap() {
+        var segment = focus.rigidbody.gameObject.GetComponent<RingSegment>();
+        if (!segment) return;
+        
+        var touch = Input.GetTouch(0);
+        var x = touch.position.x;
+        var y = touch.position.y;
+        var w = Screen.width;
+        var h = Screen.height;
+        
+        var statement = x < w*centreOffset && x > w*(1-centreOffset) && y < h*centreOffset && y > h*(1-centreOffset);
+        if (statement) return;
+        
+        segment.Toggle();
     }
 }
