@@ -1719,3 +1719,5 @@ Library/PackageCache/com.unity.ugui@1.0.0/Documentation~/images/GUISkin-EditingT
 Library/PackageCache/com.unity.shadergraph@13.1.8/Documentation~/images/SineNodeThumb.png filter=lfs diff=lfs merge=lfs -text
 Library/PackageCache/com.unity.timeline@1.7.1/Documentation~/images/smpl_gameplay.png filter=lfs diff=lfs merge=lfs -text
 Assets/Textures/8k_saturn.jpg filter=lfs diff=lfs merge=lfs -text
+Assets/Models/RingPiece.fbx filter=lfs diff=lfs merge=lfs -text
+Assets/Models/Saturn.fbx filter=lfs diff=lfs merge=lfs -text
