@@ -1,6 +1,8 @@
 using System.Security.Principal;
 using Unity.Mathematics;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 
 /**
  * Casts a ray perpendicular to phone's surface and gets an in-game object,
@@ -13,28 +15,23 @@ using UnityEngine;
  * The selected object moves respectively.
 */
 public class Player : MonoBehaviour{
-    private RaycastHit focus;
-    private Touch firstTouch;
+    private GameObject lookingAt;
     
     private int centreOffset { get; set; }
     private void Update() {
-        Physics.Raycast(transform.position,Vector3.forward,out focus,math.INFINITY);
-        OnTap();
+        var ray = new Ray(transform.position, transform.forward);
+        
+
+        
+        if (Physics.Raycast(ray, out var hit, 20)) {
+            lookingAt = hit.transform.gameObject;
+        }
+        Debug.DrawRay(transform.position, transform.forward*20 , Color.red);
     }
 
-    private void OnTap() {
-        var segment = focus.rigidbody.gameObject.GetComponent<RingSegment>();
+    public void OnClick() {
+        var segment = lookingAt.GetComponentInChildren<RingSegment>();
         if (!segment) return;
-        
-        var touch = Input.GetTouch(0);
-        var x = touch.position.x;
-        var y = touch.position.y;
-        var w = Screen.width;
-        var h = Screen.height;
-        
-        var statement = x < w*centreOffset && x > w*(1-centreOffset) && y < h*centreOffset && y > h*(1-centreOffset);
-        if (statement) return;
-        
         segment.Toggle();
     }
 }
