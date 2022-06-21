@@ -14,13 +14,9 @@ public class RingSegment : MonoBehaviour{
             gameObject.GetComponentInChildren<Renderer>().material = mat;
         }
     }
-    private void SetMaterial() {
-        gameObject.GetComponentInChildren<Renderer>().material = selectedMaterial;
-    }
     public Orbit orbit { get; private set; }
-    private void Update() { 
-        SetMaterial();
-        selected = true;
+    private void Update() {
+        if (!Selected) return;
         if (Input.GetKeyDown(KeyCode.UpArrow)) Up();
         if (Input.GetKeyDown(KeyCode.DownArrow)) Down();
     }
@@ -34,14 +30,14 @@ public class RingSegment : MonoBehaviour{
         if (!orb) return;
         orbit = orb; StickToOrbit(orbit);
     }
-    public void Up() { 
-        if (orbit.gameObject.CompareTag($"Upper Orbit")) return;
+    public void Up() {
+        if (orbit.gameObject.CompareTag($"Upper Orbit") || !Selected) return;
         var t = transform;
         var pos = t.localPosition;
         t.localPosition = new Vector3(pos.x,pos.y + 1f,pos.z);
     }
     public void Down() { 
-        if (orbit.gameObject.CompareTag($"Lower Orbit")) return;
+        if (orbit.gameObject.CompareTag($"Lower Orbit") || !Selected) return;
         var t = transform;
         var pos = t.localPosition;
         t.localPosition = new Vector3(pos.x,pos.y - 1f,pos.z);

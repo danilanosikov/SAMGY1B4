@@ -17,18 +17,24 @@ using UnityEngine.UI;
 */
 public class Player : MonoBehaviour{
     private GameObject lookingAt;
-    private IEnumerable<RingSegment> segments => FindObjectsOfType<RingSegment>();
+    private static RingSegment[] segments;
     private SwipeListener SWL => GetComponent<SwipeListener>();
 
     private void Update() {
-        var ray = new Ray(transform.position, transform.forward);
+        segments = FindObjectsOfType<RingSegment>();
+        // ReSharper disable once IdentifierTypo
+        var frwrd = transform.forward;
+        var ray = new Ray(transform.position, frwrd);
         SWL.OnSwipe.AddListener(OnSwipe);
         if (Physics.Raycast(ray, out var hit, 20)) {
             if (hit.collider.gameObject.CompareTag($"Ring")) {
                 lookingAt = hit.transform.gameObject;
             }
         }
-        Debug.DrawRay(transform.position, transform.forward*20 , Color.red);
+        else {
+            lookingAt = null;
+        }
+        Debug.DrawRay(transform.position, frwrd*20 , Color.red);
     }
 
     public void OnClick() {
@@ -47,9 +53,9 @@ public class Player : MonoBehaviour{
         SWL.OnSwipe.RemoveListener(OnSwipe);
     }
 
-    private void DeselectEverything() {
-        foreach(var obj in segments) {
-            if (obj.Selected) obj.Toggle();
+    private static void DeselectEverything() {
+        foreach (var segment in segments) {
+            if (segment.Selected) segment.Toggle();
         }
     }
     //swipe uses them
