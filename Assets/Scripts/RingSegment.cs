@@ -38,13 +38,13 @@ public class RingSegment : MonoBehaviour{
         if (orbit.gameObject.CompareTag($"Upper Orbit")) return;
         var t = transform;
         var pos = t.localPosition;
-        t.localPosition = new Vector3(pos.x,pos.y + 2f,pos.z);
+        t.localPosition = new Vector3(pos.x,pos.y + 1f,pos.z);
     }
     public void Down() { 
         if (orbit.gameObject.CompareTag($"Lower Orbit")) return;
         var t = transform;
         var pos = t.localPosition;
-        t.localPosition = new Vector3(pos.x,pos.y - 2f,pos.z);
+        t.localPosition = new Vector3(pos.x,pos.y - 1f,pos.z);
     }
     public void Toggle() { Selected = !Selected; }
 }
