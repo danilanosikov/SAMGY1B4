@@ -1,16 +1,26 @@
 using UnityEngine;
-
 public class RingSegment : MonoBehaviour{
+    [SerializeField] private Material selectedMaterial;
+    [SerializeField] private Material deselectedMaterial;
+    
     private bool selected;
-    private bool Selected {
+    public bool Selected {
         get => Selected = selected;
-        set {
-            selected = value; gameObject.GetComponentInChildren<Renderer>().material.color = value ? Color.red : Color.white; 
-            gameObject.GetComponentInChildren<Renderer>().forceRenderingOff = value;
+        private set {
+            selected = value;
+            var mat = gameObject.GetComponentInChildren<Renderer>().material;
+            mat.EnableKeyword("_EMISSION");
+            mat = value ? selectedMaterial : deselectedMaterial;
+            gameObject.GetComponentInChildren<Renderer>().material = mat;
         }
     }
+    private void SetMaterial() {
+        gameObject.GetComponentInChildren<Renderer>().material = selectedMaterial;
+    }
     public Orbit orbit { get; private set; }
-    private void Update() { if (!Selected) return;
+    private void Update() { 
+        SetMaterial();
+        if (!Selected) return;
         if (Input.GetKeyDown(KeyCode.UpArrow)) Up();
         if (Input.GetKeyDown(KeyCode.DownArrow)) Down();
     }
@@ -22,14 +32,14 @@ public class RingSegment : MonoBehaviour{
     public void OnTriggerEnter(Collider collider) {
         orbit = collider.gameObject.GetComponent<Orbit>(); StickToOrbit(orbit);
     }
-    private void Up() { if (orbit.gameObject.CompareTag($"Upper Orbit")) return;
+    public void Up() { if (orbit.gameObject.CompareTag($"Upper Orbit") || !selected) return;
         var t = transform; var pos = t.localPosition;
-        t.localPosition = new Vector3(pos.x,pos.y + 1f,pos.z);
+        t.localPosition = new Vector3(pos.x,pos.y + 0.5f,pos.z);
     }
-    private void Down() { if (orbit.gameObject.CompareTag($"Lower Orbit")) return;
+    public void Down() { if (orbit.gameObject.CompareTag($"Lower Orbit") || !selected) return;
         var t = transform;
         var pos = t.localPosition;
-        t.localPosition = new Vector3(pos.x,pos.y - 1f,pos.z);
+        t.localPosition = new Vector3(pos.x,pos.y - 0.5f,pos.z);
     }
     public void Toggle() { Selected = !Selected; }
 }

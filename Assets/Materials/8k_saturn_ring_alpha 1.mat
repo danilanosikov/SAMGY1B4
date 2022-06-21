@@ -29,7 +29,7 @@ Material:
   - _EMISSION
   - _METALLICSPECGLOSSMAP
   m_InvalidKeywords: []
-  m_LightmapFlags: 1
+  m_LightmapFlags: 2
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 1
   m_CustomRenderQueue: 2450
@@ -130,6 +130,6 @@ Material:
     m_Colors:
     - _BaseColor: {r: 0.6179246, g: 0.92834663, b: 1, a: 1}
     - _Color: {r: 0.6179245, g: 0.92834663, b: 1, a: 1}
-    - _EmissionColor: {r: 0.33922213, g: 0.6693439, b: 0.9339623, a: 1}
+    - _EmissionColor: {r: 29.866667, g: 19.576471, b: 10.917647, a: 1}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
   m_BuildTextureStacks: []
