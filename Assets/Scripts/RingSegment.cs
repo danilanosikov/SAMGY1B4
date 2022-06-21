@@ -20,7 +20,7 @@ public class RingSegment : MonoBehaviour{
     public Orbit orbit { get; private set; }
     private void Update() { 
         SetMaterial();
-        if (!Selected) return;
+        selected = true;
         if (Input.GetKeyDown(KeyCode.UpArrow)) Up();
         if (Input.GetKeyDown(KeyCode.DownArrow)) Down();
     }
@@ -30,16 +30,21 @@ public class RingSegment : MonoBehaviour{
         t.localPosition = new Vector3(pos.x, orbit.transform.localPosition.y, pos.z);
     }
     public void OnTriggerEnter(Collider collider) {
-        orbit = collider.gameObject.GetComponent<Orbit>(); StickToOrbit(orbit);
+        var orb = collider.gameObject.GetComponent<Orbit>();
+        if (!orb) return;
+        orbit = orb; StickToOrbit(orbit);
     }
-    public void Up() { if (orbit.gameObject.CompareTag($"Upper Orbit") || !selected) return;
-        var t = transform; var pos = t.localPosition;
-        t.localPosition = new Vector3(pos.x,pos.y + 0.5f,pos.z);
-    }
-    public void Down() { if (orbit.gameObject.CompareTag($"Lower Orbit") || !selected) return;
+    public void Up() { 
+        if (orbit.gameObject.CompareTag($"Upper Orbit")) return;
         var t = transform;
         var pos = t.localPosition;
-        t.localPosition = new Vector3(pos.x,pos.y - 0.5f,pos.z);
+        t.localPosition = new Vector3(pos.x,pos.y + 2f,pos.z);
+    }
+    public void Down() { 
+        if (orbit.gameObject.CompareTag($"Lower Orbit")) return;
+        var t = transform;
+        var pos = t.localPosition;
+        t.localPosition = new Vector3(pos.x,pos.y - 2f,pos.z);
     }
     public void Toggle() { Selected = !Selected; }
 }

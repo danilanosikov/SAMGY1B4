@@ -13,8 +13,9 @@ Material:
   m_ModifiedSerializedProperties: 2
   m_ValidKeywords:
   - _EMISSION
+  - _OCCLUSIONMAP
   m_InvalidKeywords: []
-  m_LightmapFlags: 2
+  m_LightmapFlags: 1
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: -1
@@ -24,14 +25,18 @@ Material:
   m_LockedProperties: 
   m_SavedProperties:
     serializedVersion: 3
-    m_TexEnvs: []
+    m_TexEnvs:
+    - _OcclusionMap:
+        m_Texture: {fileID: 2800000, guid: 2256e5463ba6d4d90a19b2aca2e00023, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
     - _Metallic: 0
     m_Colors:
     - _BaseColor: {r: 1, g: 0.8924303, b: 0.5990566, a: 1}
     - _Color: {r: 1, g: 0.8924303, b: 0.5990566, a: 1}
-    - _EmissionColor: {r: 5.5843134, g: 4.2686377, b: 2.397454, a: 1}
+    - _EmissionColor: {r: 995.01886, g: 908.9716, b: 783.812, a: 1}
   m_BuildTextureStacks: []
 --- !u!114 &1998290442001653752
 MonoBehaviour:
